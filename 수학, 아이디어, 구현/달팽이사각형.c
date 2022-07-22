@@ -1,0 +1,78 @@
+#include <stdio.h>
+
+int N;
+int map[100+10][100+10];
+
+void inputData(){
+    scanf("%d", &N);
+}
+
+void outputData(){
+    for(int i=0 ; i<N; i++){
+        for(int j =0; j<N; j++){
+            printf("%d ", map[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void solve(){
+    int num = 1;
+    int x =0, y = 0;
+
+    int dx[4] = {0, 1, 0, -1};
+    int dy[4] = {1, 0, -1, 0};
+    int direction = 0;
+    int leftBorder = -1;
+    int rightBorder = N;
+    int topBorder= -1;
+    int bottomBorder = N;
+
+    for (;;){
+        if (num == N*N+1) break;
+
+        map[x][y] = num;
+        num++;
+        
+        x += dx[direction];
+        y += dy[direction];
+
+        if (x == bottomBorder | y== rightBorder | x== topBorder | y== leftBorder ){
+            x -= dx[direction];
+            y -= dy[direction];
+
+            if (direction==0){
+                topBorder+=1;
+                direction=1;
+                x += dx[direction];
+                y += dy[direction];
+            }else if(direction == 1){
+                rightBorder-=1;
+                direction=2;
+                x += dx[direction];
+                y += dy[direction];
+            }else if(direction == 2){
+                bottomBorder-=1;
+                direction=3;
+                x += dx[direction];
+                y += dy[direction];
+            }
+            else {
+                leftBorder+=1;
+                direction=0;
+                x += dx[direction];
+                y += dy[direction];
+            }
+        }
+        
+    }
+}
+int main(void)
+{
+      // 여기서부터 작성
+      inputData();
+      solve();
+      outputData();
+ 
+      return 0;
+}
